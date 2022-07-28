@@ -3,3 +3,49 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+body {
+  max-height: 100vh;
+}
+
+#game-container {
+  max-width: 800px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 2rem 0;
+
+  h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  #table {
+  //  aspect-ratio: 4 / 3;
+   display: grid;
+   grid-template-columns: repeat(3, auto);
+   grid-template-rows: repeat(4, auto);
+   gap: 2rem;
+   justify-content: space-evenly;
+   align-content: space-around;
+
+    .card {
+      // max-width: calc(100% / 5);
+      padding: 3rem;
+      aspect-ratio: 3 / 4;
+
+      border-radius: 1rem;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &.covered {
+        background-color: #aaa;
+      }
+
+      .symbol {
+        // font-size: 4rem;
+      }
+    }
+  }
+}

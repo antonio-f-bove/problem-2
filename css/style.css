@@ -2,3 +2,31 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box; }
+
+body {
+  max-height: 100vh; }
+
+#game-container {
+  max-width: 800px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 2rem 0; }
+  #game-container h1 {
+    text-align: center;
+    margin-bottom: 2rem; }
+  #game-container #table {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    grid-template-rows: repeat(4, auto);
+    gap: 2rem;
+    justify-content: space-evenly;
+    align-content: space-around; }
+    #game-container #table .card {
+      padding: 3rem;
+      aspect-ratio: 3 / 4;
+      border-radius: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+      #game-container #table .card.covered {
+        background-color: #aaa; }
