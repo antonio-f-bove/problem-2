@@ -38,6 +38,8 @@ export class Deck extends Array {
 }
 
 export class Card {
+  backSidePictureUrl = '../assets/Dorso2.jpeg'
+
   constructor(symbol, color) {
     if (symbol == undefined) symbol = this.getAvailableSymbol()
     this.symbol = symbol
@@ -45,15 +47,18 @@ export class Card {
     if (color == undefined) color = this.getUniqueRandomColor()
     this.color = color
 
-    this.domElement = this.createandMatchDomElement()
+    this.domElement = this.createDomElement()
     this.addClickListener()
+
   }
 
-  // addClickListener() {
-  //   this.domElement.addEventListener('click', e => {
-  //     if
-  //   })
-  // }
+  addClickListener() {
+    this.domElement.addEventListener('click', () => {
+      const inner = this.domElement.children[0]
+      console.log(inner)
+      inner.classList.toggle('flipped')
+    })
+  }
 
   dealOn(table) {
     table.append(this.domElement)
@@ -83,15 +88,20 @@ export class Card {
     Card.unavailableColors.push(color)
   }
 
-  createandMatchDomElement() {
+  createDomElement() {
     const el = document.createElement('div')
-    el.className = 'card covered'
-    el.style.backgroundColor = this.color
-
-    const symbol = document.createElement('div')
-    symbol.className = 'symbol'
-    symbol.innerText = this.symbol
-    el.append(symbol)
+    el.className = 'card'
+    el.innerHTML = `
+      <div class="inner">
+        <div class="front">
+          <img src="${this.backSidePictureUrl}">
+        </div>
+        <div class="back" style="background-color: ${this.color};">
+          <div class="symbol">${this.symbol}</div>
+        </div>
+      </div>
+    `
+    // el.style.backgroundColor = this.color
 
     return el
   }
