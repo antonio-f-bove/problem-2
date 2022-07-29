@@ -38,7 +38,7 @@ export class Deck extends Array {
 }
 
 export class Card {
-  backSidePictureUrl = '../assets/Dorso2.jpeg'
+  backSidePictureUrl = '../assets/hokusai2.jpeg'
 
   constructor(symbol, color) {
     if (symbol == undefined) symbol = this.getAvailableSymbol()
