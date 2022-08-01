@@ -6,7 +6,7 @@ export class Deck extends Array {
   constructor(numberOfPairs) {
     super() // override the super constructor
 
-    this.stateManager = new StateManager()
+    this.stateManager = new StateManager(numberOfPairs)
 
     this.fillWithCardPairs(numberOfPairs)
     this.shuffle()
