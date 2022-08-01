@@ -10,6 +10,8 @@ export class Deck extends Array {
 
     this.fillWithCardPairs(numberOfPairs)
     this.shuffle()
+
+    this.doInitialShowOfCards()
   }
 
   fillWithCardPairs(numberOfPairs) {
@@ -41,11 +43,21 @@ export class Deck extends Array {
     })
   }
 
+  async doInitialShowOfCards() {
+    this.showAllCards()
+    await new Promise(r => setTimeout(r, 5000));
+    this.coverAllCards()
+  }
+
+  showAllCards() {
+    this.forEach(card => {
+      card.flip()
+    })
+  }
+
   coverAllCards() {
     this.forEach(card => {
       card.cover()
     })
   }
 }
-
-

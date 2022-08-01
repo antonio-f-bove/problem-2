@@ -7,7 +7,6 @@ export class StateManager {
 
   changeState(state) {
     this.currentState = state
-    console.log('change state', this.currentState)
   }
 
   handleClick(card) {
@@ -19,20 +18,14 @@ export class StateManager {
   }
 
   coverActiveCards() {
-    console.log('cover')
     this.activeCards.forEach(card => {
       card.cover()
     })
   }
 
   emptyActiveCards() {
-    console.log('empty')
     this.activeCards.length = 0
   }
-
-  // sleep(ms) {
-  //   return new Promise(resolve => setTimeout(resolve, ms));
-  // }
 }
 
 class State {
@@ -71,6 +64,7 @@ class OneActiveCards extends State {
     card.flip()
     this.manager.activeCards.push(card)
 
+    // if they match we leave them face up
     if (!this.manager.activeCardsMatch()) {
       // wait 2 seconds the cover active cards
       // TODO slouzioni migliori?

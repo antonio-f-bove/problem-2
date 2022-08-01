@@ -7,11 +7,11 @@ body {
   height: 100vh;
   background-color: teal; }
 
-#game-container {
+#game-screen {
   max-width: 800px;
   height: 100%;
   margin: 0 auto; }
-  #game-container #table {
+  #game-screen #table {
     width: 100%;
     height: 100%;
     display: grid;
@@ -20,7 +20,7 @@ body {
     gap: 2rem;
     justify-content: space-evenly;
     align-content: space-around; }
-    #game-container #table .card {
+    #game-screen #table .card {
       width: 6rem;
       height: 8rem;
       border-radius: 1rem;
@@ -28,31 +28,31 @@ body {
       background-color: transparent;
       perspective: 1000px;
       /* Remove this if you don't want the 3D effect */ }
-      #game-container #table .card .inner {
+      #game-screen #table .card .inner {
         position: relative;
         width: 100%;
         height: 100%;
         text-align: center;
         transition: transform 0.5s;
         transform-style: preserve-3d; }
-        #game-container #table .card .inner .front, #game-container #table .card .inner .back {
+        #game-screen #table .card .inner .front, #game-screen #table .card .inner .back {
           position: absolute;
           width: 100%;
           height: 100%;
           -webkit-backface-visibility: hidden;
           /* Safari */
           backface-visibility: hidden; }
-        #game-container #table .card .inner .front img {
+        #game-screen #table .card .inner .front img {
           width: 100%; }
-        #game-container #table .card .inner .back {
+        #game-screen #table .card .inner .back {
           background-color: dodgerblue;
           color: white;
           transform: rotateY(180deg);
           display: flex;
           justify-content: center;
           align-items: center; }
-          #game-container #table .card .inner .back .symbol {
+          #game-screen #table .card .inner .back .symbol {
             font-size: 4rem;
             color: #fff; }
-        #game-container #table .card .inner.flipped {
+        #game-screen #table .card .inner.flipped {
           transform: rotateY(180deg); }
