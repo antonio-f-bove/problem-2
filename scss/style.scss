@@ -14,5 +14,9 @@ body {
   position: relative;
 }
 
+@import './temp-screen';
+@import './modal';
+
+@import './ready-screen';
 @import './game-screen';
-@import './win-modal'
+@import './win-screen';

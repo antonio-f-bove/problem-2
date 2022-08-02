@@ -1,5 +1,6 @@
-// TODO needs refactoring: separate game phases & actual playing states (noCard, oneCard...)
+// TODO needs refactoring: separate game states & actual playing phases (noCard, oneCard...)
 
+import { Deck } from "./Deck.js"
 
 export class StateManager {
   activeCards = []
@@ -7,7 +8,17 @@ export class StateManager {
 
   constructor(maxPairs) {
     this.maxPairs = maxPairs
-    this.currentState = new NoActiveCards(this)
+    this.currentState = new Ready(this)
+  }
+
+  setUpDeck() {
+    this.table = document.getElementById('table')
+    this.cleanUpTable(this.table)
+    this.deck = new Deck(this.maxPairs, this.table)
+  }
+
+  cleanUpTable(table) {
+    table.innerHTML = ''
   }
 
   changeState(state) {
@@ -86,14 +97,72 @@ class OneActiveCard extends State {
   }
 }
 
+class Ready extends State {
+  constructor(manager) {
+    super(manager)
+
+    this.screen = document.getElementById('ready-screen')
+
+    this.showScreen()
+    this.listenForNewGame()
+  }
+
+  showScreen() {
+    this.screen.style.display = 'block'
+  }
+
+  hideScreen() {
+    this.screen.style.display = 'none'
+  }
+
+  listenForNewGame() {
+    const btn = document.querySelector('.new-game-button')
+    btn.addEventListener('click', () => {
+      this.hideScreen()
+      this.manager.changeState(new GameInitializer(this.manager))
+    })
+  }
+}
+
+class GameInitializer extends State {
+  constructor(manager) {
+    super(manager)
+
+    this.screen = document.getElementById('game-screen')
+
+    this.manager.setUpDeck()
+    this.showScreen()
+    this.manager.changeState(new NoActiveCards(this.manager))
+  }
+
+  showScreen() {
+    this.screen.style.display = 'block'
+  }
+}
+
 class Win extends State {
   constructor(manager) {
     super(manager)
+
+    this.screen = document.getElementById('win-screen')
     
-    this.showWinModal()
+    this.showWinScreen()
+    this.listenForNewGame()
   }
 
-  showWinModal() {
-    document.getElementById('win-modal').style.display = 'flex'
+  showScreen() {
+    this.screen.style.display = 'block'
+  }
+
+  hideScreen() {
+    this.screen.style.display = 'none'
+  }
+
+  listenForNewGame() {
+    const btn = document.querySelector('.new-game-button')
+    btn.addEventListener('click', () => {
+      this.hideScreen()
+      this.manager.changeState(new Ready(this.manager))
+    })
   }
 }

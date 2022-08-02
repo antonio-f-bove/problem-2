@@ -48,8 +48,6 @@ export class Card {
         </div>
       </div>
     `
-    // el.style.backgroundColor = this.color
-
     return el
   }
 

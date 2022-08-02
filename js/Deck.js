@@ -1,17 +1,16 @@
-import { StateManager } from "./StateManager.js"
 import { Card } from "./Card.js"
 
 export class Deck extends Array {
 
-  constructor(numberOfPairs) {
+  constructor(numberOfPairs, table) {
     super() // override the super constructor
 
-    this.stateManager = new StateManager(numberOfPairs)
-
     this.fillWithCardPairs(numberOfPairs)
-    this.shuffle()
+    this.recursivelyShuffle(2)
 
     this.doInitialShowOfCards()
+
+    this.dealCards(table)
   }
 
   fillWithCardPairs(numberOfPairs) {
@@ -23,7 +22,7 @@ export class Deck extends Array {
     }
   }
 
-  shuffle(last = false) {
+  recursivelyShuffle(howManyMoreTimes) {
     // Fisher-Yates shuffle
     for (let i = this.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
@@ -32,9 +31,8 @@ export class Deck extends Array {
       this[i] = temp
     }
 
-    // actually a double shuffle
-    if (last) return
-    this.shuffle(true)
+    if (--howManyMoreTimes <= 0) return
+    this.recursivelyShuffle(howManyMoreTimes)
   }
 
   dealCards(table) {
