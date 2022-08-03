@@ -72,6 +72,7 @@ class State {
   listenForNewGame() {
     const btn = document.querySelector('.new-game-button')
     btn.addEventListener('click', () => {
+      console.log('NEW GAME PLEASE!')
       this.hideAllScreens()
 
       // start new game
@@ -175,13 +176,4 @@ class Win extends State {
     this.showScreen(this.screenName)
     this.listenForNewGame()
   }
-
-  // listenForNewGame() {
-  //   // TODO directly start new game
-  //   const btn = document.querySelector('.new-game-button')
-  //   btn.addEventListener('click', () => {
-  //     this.hideAllScreens()
-  //     this.manager.changeState(new Ready(this.manager))
-  //   })
-  // }
 }
