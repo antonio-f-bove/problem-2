@@ -1,6 +1,8 @@
 // TODO needs refactoring: separate game states & actual playing phases (noCard, oneCard...)
 
+import { Card } from "./Card.js"
 import { Deck } from "./Deck.js"
+import utils from "./utils.js"
 
 export class StateManager {
   activeCards = []
@@ -8,17 +10,19 @@ export class StateManager {
 
   constructor(maxPairs) {
     this.maxPairs = maxPairs
+    this.table = document.getElementById('table')
     this.currentState = new Ready(this)
   }
 
   setUpDeck() {
-    this.table = document.getElementById('table')
-    this.cleanUpTable(this.table)
+    this.cleanUp()
     this.deck = new Deck(this.maxPairs, this.table, this)
   }
 
-  cleanUpTable(table) {
-    table.innerHTML = ''
+  cleanUp() {
+    this.table.innerHTML = ''
+    Card.unavailableColors.length = 0
+    Card.unavailableSymbols.length = 0
   }
 
   changeState(state) {
@@ -31,7 +35,7 @@ export class StateManager {
   }
 
   activeCardsMatch() {
-    return this.activeCards[0].symbol === this.activeCards[1].symbol
+    return this.activeCards[0].color === this.activeCards[1].color
   }
 
   coverActiveCards() {
@@ -73,9 +77,9 @@ class State {
     const btns = document.querySelectorAll('.new-game-button')
     /* 
     TODO qui bisogna proprio trovare una soluzione migliore
-    sono due che non compaiono mai insieme, ma hanno lo stesso nome di classe
-    si potrebbe cercare con più specificità, ma bisognerebbbe passare parametri
-    alla funzione
+    sono due bottoni che non compaiono mai insieme, ma hanno lo stesso nome di classe
+    li si potrebbe cercare con più specificità, ma bisognerebbbe passare parametri
+    alla funzione (id del parent)
     */
     btns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -123,7 +127,8 @@ class OneActiveCard extends State {
     } else {
       // wait 1.5 seconds then cover active cards
       // TODO slouzioni migliori?
-      await new Promise(r => setTimeout(r, 1500));
+      // await new Promise(r => setTimeout(r, 1500));
+      await utils.sleep(1500)
       this.manager.coverActiveCards()  
     }
 

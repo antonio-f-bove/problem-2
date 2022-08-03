@@ -51,13 +51,16 @@ export class Card {
     return el
   }
 
-  static availableSymbols = ['∑', 'ß', 'µ', '∆', 'ø', '¥', '†', '∂', 'å', '∫']
+  static availableSymbols = ['∑', 'ß', 'µ', '∆', 'ø', '¥', '†', '∂', 'å', '∫', 'π', '«']
+  static unavailableSymbols = []
+
   getAvailableSymbol() {
     const randomIndex = Math.floor(Math.random() * (Card.availableSymbols.length))
     const symbol = Card.availableSymbols[randomIndex]
 
-    // remove symbol form array of availables
-    Card.availableSymbols.splice(randomIndex, 1)
+    if (Card.unavailableSymbols.includes(symbol)) symbol = this.getAvailableSymbol()
+
+    Card.unavailableSymbols.push(symbol)
 
     return symbol
   }

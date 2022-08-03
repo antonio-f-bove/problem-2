@@ -1,4 +1,5 @@
 import { Card } from "./Card.js"
+import utils from "./utils.js"
 
 export class Deck extends Array {
 
@@ -45,7 +46,8 @@ export class Deck extends Array {
 
   async doInitialShowOfCards() {
     this.showAllCards()
-    await new Promise(r => setTimeout(r, 5000));
+    await utils.sleep(5000) // TODO serve un modo piu bello
+    // await new Promise(r => setTimeout(r, 5000));
     this.coverAllCards()
   }
 
