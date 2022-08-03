@@ -2,15 +2,17 @@ import { Card } from "./Card.js"
 
 export class Deck extends Array {
 
-  constructor(numberOfPairs, table) {
+  constructor(numberOfPairs, table, manager) {
     super() // override the super constructor
+
+    this.manager = manager
+    console.log(this.manager)
 
     this.fillWithCardPairs(numberOfPairs)
     this.recursivelyShuffle(2)
 
-    this.doInitialShowOfCards()
-
     this.dealCards(table)
+    this.doInitialShowOfCards()
   }
 
   fillWithCardPairs(numberOfPairs) {

@@ -14,7 +14,7 @@ export class StateManager {
   setUpDeck() {
     this.table = document.getElementById('table')
     this.cleanUpTable(this.table)
-    this.deck = new Deck(this.maxPairs, this.table)
+    this.deck = new Deck(this.maxPairs, this.table, this)
   }
 
   cleanUpTable(table) {
@@ -23,6 +23,7 @@ export class StateManager {
 
   changeState(state) {
     this.currentState = state
+    console.log('state', this.currentState)
   }
 
   handleClick(card) {
@@ -48,9 +49,38 @@ export class StateManager {
   }
 }
 
+
+
+
 class State {
   constructor(manager) {
     this.manager = manager
+  }
+
+  showScreen(screenType) {
+    document.getElementById(`${screenType}-screen`).style.display = 'block'
+  }
+
+  hideAllScreens() {
+    const allScreens = document.querySelectorAll('[id*="-screen"]')
+    allScreens.forEach(screen => {
+      console.log(screen)
+      screen.style.display = 'none'
+    })
+  }
+
+  listenForNewGame() {
+    const btn = document.querySelector('.new-game-button')
+    btn.addEventListener('click', () => {
+      this.hideAllScreens()
+
+      // start new game
+      this.manager.setUpDeck()
+      this.showScreen('game')
+      this.manager.changeState(new NoActiveCards(this.manager))
+
+      // this.manager.changeState(new StartGame(this.manager))
+    })
   }
 }
 
@@ -98,71 +128,60 @@ class OneActiveCard extends State {
 }
 
 class Ready extends State {
+  screenName = 'ready'
+
   constructor(manager) {
     super(manager)
 
-    this.screen = document.getElementById('ready-screen')
+    this.screen = 
 
-    this.showScreen()
+    this.showScreen(this.screenName)
     this.listenForNewGame()
   }
 
-  showScreen() {
-    this.screen.style.display = 'block'
-  }
+  // listenForNewGame() {
+  //   const btn = document.querySelector('.new-game-button')
+  //   btn.addEventListener('click', () => {
+  //     this.hideAllScreens()
 
-  hideScreen() {
-    this.screen.style.display = 'none'
-  }
+  //     // start new game
+  //     this.manager.setUpDeck()
+  //     this.showScreen('game')
+  //     this.manager.changeState(new NoActiveCards(this.manager))
 
-  listenForNewGame() {
-    const btn = document.querySelector('.new-game-button')
-    btn.addEventListener('click', () => {
-      this.hideScreen()
-      this.manager.changeState(new GameInitializer(this.manager))
-    })
-  }
+  //     // this.manager.changeState(new StartGame(this.manager))
+  //   })
+  // }
 }
 
-class GameInitializer extends State {
-  constructor(manager) {
-    super(manager)
+// class StartGame extends State {
+//   screenName = 'game'
 
-    this.screen = document.getElementById('game-screen')
+//   constructor(manager) {
+//     super(manager)
 
-    this.manager.setUpDeck()
-    this.showScreen()
-    this.manager.changeState(new NoActiveCards(this.manager))
-  }
-
-  showScreen() {
-    this.screen.style.display = 'block'
-  }
-}
+//     this.manager.setUpDeck()
+//     this.showScreen(this.screenName)
+//     this.manager.changeState(new NoActiveCards(this.manager))
+//   }
+// }
 
 class Win extends State {
+  screenName = 'win'
+
   constructor(manager) {
     super(manager)
-
-    this.screen = document.getElementById('win-screen')
     
-    this.showWinScreen()
+    this.showScreen(this.screenName)
     this.listenForNewGame()
   }
 
-  showScreen() {
-    this.screen.style.display = 'block'
-  }
-
-  hideScreen() {
-    this.screen.style.display = 'none'
-  }
-
-  listenForNewGame() {
-    const btn = document.querySelector('.new-game-button')
-    btn.addEventListener('click', () => {
-      this.hideScreen()
-      this.manager.changeState(new Ready(this.manager))
-    })
-  }
+  // listenForNewGame() {
+  //   // TODO directly start new game
+  //   const btn = document.querySelector('.new-game-button')
+  //   btn.addEventListener('click', () => {
+  //     this.hideAllScreens()
+  //     this.manager.changeState(new Ready(this.manager))
+  //   })
+  // }
 }

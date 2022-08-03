@@ -17,7 +17,7 @@ export class Card {
 
   addClickListener() {
     this.domElement.addEventListener('click', () => {
-      if (!this.isFaceUp) this.deck.stateManager.handleClick(this)
+      if (!this.isFaceUp) this.deck.manager.handleClick(this)
     })
   }
 
