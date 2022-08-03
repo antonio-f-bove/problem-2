@@ -8,7 +8,7 @@ export class StateManager {
 
   constructor(maxPairs) {
     this.maxPairs = maxPairs
-    this.currentState = new Win(this)
+    this.currentState = new Ready(this)
   }
 
   setUpDeck() {

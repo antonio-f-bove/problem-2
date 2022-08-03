@@ -1,4 +1,8 @@
 .modal {
+  color: #fff;
+  font-size: 4rem;
+  text-align: center;
+
   max-width: 70%;
   margin: 0 auto;
   border: 1px solid #aaa;
@@ -9,14 +13,22 @@
 
   display: flex;
   flex-direction: column;
-  // justify-content: center;
+  justify-content: center;
   align-items: center;
 
   .new-game-button {
+    margin-top: 1rem;
     background-color: teal;
     padding: 1rem;
     border: 1px solid #aaa;
     border-radius: 1em;
     cursor: pointer;
+  }
+
+  @media screen and (max-width: 1080px) {
+    font-size: 2rem;
+  }
+  @media screen and (max-width: 540px) {
+    font-size: 1rem;
   }
 }

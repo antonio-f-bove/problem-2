@@ -1,3 +1,5 @@
+@import './variables';
+
 #game-screen {
   display: none;
 
@@ -16,17 +18,19 @@
     justify-content: space-evenly;
     align-content: space-around;
 
+    @media screen and (max-width: 1080px) {
+      gap: .5rem;
+    }
+
     .card {
       width: 6rem;
       height: 8rem;
-      // min-height: calc(100% / $numberOfRows +1);
-      // min-width: calc(100% / $numberOfCols +1);
+      // aspect-ratio: 3 / 4;
 
       border-radius: 1rem;
       overflow: hidden;
 
       background-color: transparent;
-      // border: 1px solid #f1f1f1;
       perspective: 1000px; /* Remove this if you don't want the 3D effect */
 
       .inner {
