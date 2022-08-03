@@ -8,7 +8,7 @@ export class StateManager {
 
   constructor(maxPairs) {
     this.maxPairs = maxPairs
-    this.currentState = new Ready(this)
+    this.currentState = new Win(this)
   }
 
   setUpDeck() {
@@ -70,18 +70,27 @@ class State {
   }
 
   listenForNewGame() {
-    const btn = document.querySelector('.new-game-button')
-    btn.addEventListener('click', () => {
-      console.log('NEW GAME PLEASE!')
-      this.hideAllScreens()
-
-      // start new game
-      this.manager.setUpDeck()
-      this.showScreen('game')
-      this.manager.changeState(new NoActiveCards(this.manager))
-
-      // this.manager.changeState(new StartGame(this.manager))
+    const btns = document.querySelectorAll('.new-game-button')
+    /* 
+    TODO qui bisogna proprio trovare una soluzione migliore
+    sono due che non compaiono mai insieme, ma hanno lo stesso nome di classe
+    si potrebbe cercare con più specificità, ma bisognerebbbe passare parametri
+    alla funzione
+    */
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        console.log('NEW GAME PLEASE!')
+        this.hideAllScreens()
+  
+        this.startNewGame()
+      })
     })
+  }
+
+  startNewGame() {
+    this.manager.setUpDeck()
+    this.showScreen('game')
+    this.manager.changeState(new NoActiveCards(this.manager))
   }
 }
 
@@ -112,9 +121,9 @@ class OneActiveCard extends State {
     if (this.manager.activeCardsMatch()) {
       this.manager.foundPairs++
     } else {
-      // wait 2 seconds the cover active cards
+      // wait 1.5 seconds then cover active cards
       // TODO slouzioni migliori?
-      await new Promise(r => setTimeout(r, 2000));
+      await new Promise(r => setTimeout(r, 1500));
       this.manager.coverActiveCards()  
     }
 
@@ -139,33 +148,7 @@ class Ready extends State {
     this.showScreen(this.screenName)
     this.listenForNewGame()
   }
-
-  // listenForNewGame() {
-  //   const btn = document.querySelector('.new-game-button')
-  //   btn.addEventListener('click', () => {
-  //     this.hideAllScreens()
-
-  //     // start new game
-  //     this.manager.setUpDeck()
-  //     this.showScreen('game')
-  //     this.manager.changeState(new NoActiveCards(this.manager))
-
-  //     // this.manager.changeState(new StartGame(this.manager))
-  //   })
-  // }
 }
-
-// class StartGame extends State {
-//   screenName = 'game'
-
-//   constructor(manager) {
-//     super(manager)
-
-//     this.manager.setUpDeck()
-//     this.showScreen(this.screenName)
-//     this.manager.changeState(new NoActiveCards(this.manager))
-//   }
-// }
 
 class Win extends State {
   screenName = 'win'
